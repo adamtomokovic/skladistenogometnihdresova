@@ -3,7 +3,7 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 
-void prikaziMenu()
+void PrikaziMenu()
 {
     printf("\n=============================\n");
     printf(" SKLADISTE NOGOMETNIH DRESOVA\n");
