@@ -9,7 +9,7 @@ int main()
 
     do
     {
-        prikaziMenu();
+        PrikaziMenu();
 
         printf("Odaberi opciju: ");
         scanf("%d", &opcija);
@@ -17,19 +17,19 @@ int main()
         switch (opcija)
         {
         case 1:
-            dodajDres();
+            DodajDres();
             break;
 
         case 2:
-            prikaziDresove();
+            PrikaziDresove();
             break;
 
         case 3:
-            urediDres();
+            UrediDres();
             break;
 
         case 4:
-            obrisiDres();
+            ObrisiDres();
             break;
 
         case 0:
