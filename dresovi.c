@@ -4,11 +4,11 @@
 #include "dresovi.h"
 
 
-Dres dresovi[MAX_DRESOVA];
-int brojDresova = 0;
+static Dres dresovi[MAX_DRESOVA];
+static int brojDresova = 0;
 
 
-void dodajDres()
+void DodajDres()
 {
     if (brojDresova >= MAX_DRESOVA)
     {
@@ -16,18 +16,20 @@ void dodajDres()
         return;
     }
 
+	static int idBrojac = 1; //static
+
     Dres noviDres;
     int velicinaBroj;
 
-    printf("\nUnesi ID: ");
-    scanf("%d", &noviDres.id);
+	noviDres.id = idBrojac++;
+	printf("\nAutomatski dodijeljen jedinstveni ID dresa: %d\n", noviDres.id);
 
     printf("Unesi naziv kluba: ");
-    scanf(" %d", noviDres.klub);
+    scanf(" %49[^\n]", noviDres.klub);
 
 
     printf("Unesi ime igraca: ");
-    scanf(" %d", noviDres.igrac);
+    scanf(" %49[^\n]", noviDres.igrac);
 
     printf("Unesi broj igraca: ");
     scanf("%d", &noviDres.broj);
@@ -51,34 +53,35 @@ void dodajDres()
 }
 
 
-void prikaziDresove()
+void PrikaziDresove()
 {
-    if (brojDresova == 0)
-    {
-        printf("Nema dresova!\n");
-        return;
-    }
+	if (brojDresova == 0)
+	{
+		printf("Nema dresova!\n");
+		return;
+	}
 
-    for (int i = 0; i < brojDresova; i++)
-    {
-        printf("\n====================\n");
+	for (int i = 0; i < brojDresova; i++)
+	{
+		printf("\n====================\n");
+		printf("ID: %d\n", dresovi[i].id);
+		printf("Klub: %s\n", dresovi[i].klub);
+		printf("Igrac: %s\n", dresovi[i].igrac);
+		printf("Broj: %d\n", dresovi[i].broj);
 
-        printf("ID: %d\n", dresovi[i].id);
-        printf("Klub: %s\n", dresovi[i].klub);
-        printf("Igrac: %s\n", dresovi[i].igrac);
-        printf("Broj: %d\n", dresovi[i].broj);
+		printf("Velicina: ");
+		PrikaziVelicinu(&dresovi[i]);
+		printf("\n");
 
-        printf("Velicina: ");
-        prikaziVelicinu(dresovi[i].velicina);
-        printf("\n");
+		printf("Cijena: %.2f\n", dresovi[i].cijena);
+		printf("Kolicina: %d\n", dresovi[i].kolicina);
 
-        printf("Cijena: %.2f\n", dresovi[i].cijena);
-        printf("Kolicina: %d\n", dresovi[i].kolicina);
-    }
+		//makro funkcija primjena
+		printf("Ukupna vrijednost zaliha: %.2f EUR\n", UKUPNA_VRIJEDNOST(dresovi[i].cijena, dresovi[i].kolicina));
+	}
 }
 
-
-void urediDres()
+void UrediDres()
 {
     int trazeniId;
 
@@ -110,7 +113,7 @@ void urediDres()
 }
 
 
-void obrisiDres()
+void ObrisiDres()
 {
     int trazeniId;
 
@@ -137,9 +140,9 @@ void obrisiDres()
 }
 
 
-void prikaziVelicinu(Velicina velicina)
+void PrikaziVelicinu(const Dres* dresPtr) //12 koncept
 {
-    switch (velicina)
+    switch (dresPtr->velicina) //12 koncept
     {
     case XS:
         printf("XS");
